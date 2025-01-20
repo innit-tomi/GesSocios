@@ -1,0 +1,2 @@
+# GesSocios
+Practica Profesional
