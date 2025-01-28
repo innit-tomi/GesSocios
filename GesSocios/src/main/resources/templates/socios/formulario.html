@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${socio.id != null ? 'Editar Socio' : 'Nuevo Socio'}">Formulario de Socio</title>
+</head>
+<body>
+<h1 th:text="${socio.id != null ? 'Editar Socio' : 'Nuevo Socio'}">Nuevo Socio</h1>
+<form th:action="@{${socio.id != null} ? ${'/socios/' + socio.id} : '/socios'}" th:object="${socio}" method="post">
+    <input type="hidden" th:field="*{id}" th:if="${socio.id != null}" />
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" th:field="*{nombre}" required />
+    <br />
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" th:field="*{apellido}" required />
+    <br />
+    <label for="documento">Documento:</label>
+    <input type="text" id="documento" th:field="*{documento}" required />
+    <br />
+    <label for="numeroDeSocio">Número de Socio:</label>
+    <input type="number" id="numeroDeSocio" th:field="*{numeroDeSocio}" required />
+    <br />
+    <button type="submit">Guardar</button>
+    <a th:href="@{/socios}">Cancelar</a>
+</form>
+</body>
+</html>

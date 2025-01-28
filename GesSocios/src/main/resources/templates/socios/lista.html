@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Socios</title>
+</head>
+<body>
+<h1>Lista de Socios</h1>
+<form th:action="@{/socios/buscar}" method="get">
+    <input type="text" name="apellido" th:value="${apellido}" placeholder="Buscar por apellido"/>
+    <button type="submit">Buscar</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Documento</th>
+        <th>Número de Socio</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="socio : ${socios}">
+        <td th:text="${socio.id}"></td>
+        <td th:text="${socio.nombre}"></td>
+        <td th:text="${socio.apellido}"></td>
+        <td th:text="${socio.documento}"></td>
+        <td th:text="${socio.numeroDeSocio}"></td>
+        <td>
+            <a th:href="@{'/socios/editar/' + ${socio.id}}">Editar</a>
+            <a th:href="@{'/socios/eliminar/' + ${socio.id}}">Eliminar</a>
+            <form th:action="@{'/socios/' + ${socio.id} + '/pagar'}" method="post" style="display:inline;">
+                <input type="submit" value="Pagar"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/socios/nuevo}">Agregar Nuevo Socio</a>
+</body>
+</html>
