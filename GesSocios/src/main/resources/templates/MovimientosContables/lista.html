@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contabilidad</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .entrada {
+            background-color: #d4edda; /* verde pastel */
+        }
+        .salida {
+            background-color: #f8d7da; /* rojo claro */
+        }
+
+
+    </style>
+
+
+</head>
+<body>
+<!-- Contenedor principal -->
+<div class="container">
+    <!-- Menú -->
+    <div class="menu" th:replace="~{fragments/menu :: menu}"></div>
+
+    <!-- Contenido -->
+    <div class="content">
+        <h1>Movimientos Contables</h1>
+
+        <!-- Botón para agregar movimiento -->
+        <a th:href="@{/contabilidad/nuevo}" style="display: inline-block; margin-top: 10px;">
+            Registrar Movimiento
+        </a>
+
+        <!-- Tabla -->
+        <table>
+            <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Motivo</th>
+                <th>Monto</th>
+                <th>Tipo</th>
+                <th>Socio</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="mov : ${movimientos}"
+                th:classappend="${mov.tipo == T(com.unnoba.gessocios.model.TipoMovimiento).ENTRADA} ? 'entrada' : 'salida'">
+                <td th:text="${mov.fecha}"></td>
+                <td th:text="${mov.motivo}"></td>
+                <td th:text="${mov.monto}"></td>
+                <td th:text="${mov.tipo}"></td>
+                <td th:text="${mov.socio != null ? mov.socio.numeroSocio : '-'}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

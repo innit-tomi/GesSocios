@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Menú</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #333;
+        }
+
+        h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: white;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            background-color: #4CAF50;
+            padding: 10px;
+            border-radius: 5px;
+            display: block;
+            text-align: center;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="menu">
+    <nav>
+        <div>
+
+            <li><a th:href="@{/}">Inicio</a></li>
+            <h3>Gesstionar Socios</h3>
+            <ul>
+                <li><a th:href="@{/socios}">Socios</a></li>
+
+            </ul>
+
+            <h3>Gestionar Actividades</h3>
+            <ul>
+                <li><a th:href="@{/actividades}">Actividades</a></li>
+            </ul>
+
+
+            <h3>Contabilidad</h3>
+            <ul>
+                <li><a th:href="@{/contabilidad}">Contabilidad</a></li>
+                <li><a th:href="@{/cuotas/lista}">Cuotas</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li><a th:href="@{/login}">Cerrar Sesión</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

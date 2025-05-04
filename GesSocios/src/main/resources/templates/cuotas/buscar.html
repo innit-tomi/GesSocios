@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Buscar Socio</title>
+</head>
+<body>
+<h2>Buscar Socio</h2>
+<form th:action="@{/cuotas/buscar}" method="post">
+    <input type="text" name="termino" placeholder="Nombre o N° de Socio"/>
+    <button type="submit">Buscar</button>
+</form>
+
+<div th:if="${mensaje != null}" th:text="${mensaje}" style="color: red;"></div>
+<a th:href="@{/cuotas/lista}">Volver</a>
+</body>
+</html>

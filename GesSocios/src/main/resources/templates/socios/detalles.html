@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalles del Socio</title>
+  <!-- Font Awesome para íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn i {
+      margin-right: 6px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-add {
+      background-color: #28a745;
+    }
+
+    .btn-add:hover {
+      background-color: #218838;
+    }
+
+    .btn-remove {
+      background-color: #dc3545;
+    }
+
+    .btn-remove:hover {
+      background-color: #c82333;
+    }
+
+    select {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-right: 10px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+  <!-- CSS de Select2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- JS de Select2 -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1 th:text="'Detalles de ' + ${socio.nombre} + ' ' + ${socio.apellido}"></h1>
+
+  <h2>Actividades Inscripto</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Categoría</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="actividad : ${socio.actividades}">
+      <td th:text="${actividad.nombre}"></td>
+      <td th:text="${actividad.categoria}"></td>
+      <td>
+        <form th:action="@{'/socios/' + ${socio.id} + '/quitarActividad/' + ${actividad.id}}" method="post" style="margin: 0;">
+          <button type="submit" class="btn btn-remove">
+            <i class="fas fa-trash-alt"></i> Quitar
+          </button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top: 30px;">Inscribir en una nueva actividad</h3>
+  <form th:action="@{'/socios/' + ${socio.id} + '/agregarActividad'}" method="post" style="margin-top: 10px;">
+    <select name="actividadId" class="select-actividad">
+      <option></option> <!-- opción vacía para placeholder -->
+      <option th:each="actividad : ${actividades}"
+              th:value="${actividad.id}"
+              th:text="${actividad.nombre + ' - ' + actividad.categoria}">
+      </option>
+    </select>
+    <button type="submit" class="btn btn-add">
+      <i class="fas fa-plus-circle"></i> Agregar
+    </button>
+  </form>
+
+  <a th:href="@{/socios}">
+    <i class="fas fa-arrow-left"></i> Volver a la lista de socios
+  </a>
+</div>
+
+</body>
+<script>
+  $(document).ready(function() {
+    $('.select-actividad').select2({
+      placeholder: "Buscar actividad...",
+      allowClear: true,
+      width: '30%'  // Hace que se ajuste al ancho del contenedor
+    });
+  });
+</script>
+
+</html>

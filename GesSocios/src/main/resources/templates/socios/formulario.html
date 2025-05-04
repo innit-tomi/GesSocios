@@ -1,26 +1,138 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${socio.id != null ? 'Editar Socio' : 'Nuevo Socio'}">Formulario de Socio</title>
+    <meta charset="UTF-8">
+    <title th:text="${socio.id != null} ? 'Editar Socio' : 'Nuevo Socio'">Formulario de Socio</title>
+
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        .btn i {
+            margin-right: 6px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-save {
+            background-color: #28a745;
+        }
+
+        .btn-save:hover {
+            background-color: #218838;
+        }
+
+        .btn-cancel {
+            background-color: #6c757d;
+        }
+
+        .btn-cancel:hover {
+            background-color: #5a6268;
+        }
+    </style>
 </head>
 <body>
-<h1 th:text="${socio.id != null ? 'Editar Socio' : 'Nuevo Socio'}">Nuevo Socio</h1>
-<form th:action="@{${socio.id != null} ? ${'/socios/' + socio.id} : '/socios'}" th:object="${socio}" method="post">
-    <input type="hidden" th:field="*{id}" th:if="${socio.id != null}" />
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" th:field="*{nombre}" required />
-    <br />
-    <label for="apellido">Apellido:</label>
-    <input type="text" id="apellido" th:field="*{apellido}" required />
-    <br />
-    <label for="documento">Documento:</label>
-    <input type="text" id="documento" th:field="*{documento}" required />
-    <br />
-    <label for="numeroDeSocio">Número de Socio:</label>
-    <input type="number" id="numeroDeSocio" th:field="*{numeroDeSocio}" required />
-    <br />
-    <button type="submit">Guardar</button>
-    <a th:href="@{/socios}">Cancelar</a>
-</form>
+
+<div class="container">
+    <h1 th:text="${socio.id != null} ? 'Editar Socio' : 'Nuevo Socio'">Formulario de Socio</h1>
+
+    <form th:action="${socio.id != null} ? @{/socios/{id}(id=${socio.id})} : @{/socios}" th:object="${socio}" method="post">
+        <input type="hidden" th:if="${socio.id != null}" th:field="*{id}" />
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" th:field="*{nombre}" required/>
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" th:field="*{apellido}" required/>
+
+        <label for="documento">Documento:</label>
+        <input type="text" id="documento" th:field="*{documento}" required/>
+
+        <label for="localidad">Localidad:</label>
+        <input type="text" id="localidad" th:field="*{localidad}" required/>
+
+        <label for="domicilio">Domicilio:</label>
+        <input type="text" id="domicilio" th:field="*{domicilio}" required/>
+
+        <label for="mail">Mail:</label>
+        <input type="text" id="mail" th:field="*{mail}" required/>
+
+        <label for="genero">Género:</label>
+        <select id="genero" th:field="*{genero}">
+            <option value="">Seleccione un género</option>
+            <option value="MASCULINO">MASCULINO</option>
+            <option value="FEMENINO">FEMENINO</option>
+            <option value="OTRO">OTRO</option>
+        </select>
+
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" th:field="*{tipo}">
+            <option value="Adulto">Adulto</option>
+            <option value="Jubilado">Jubilado</option>
+            <option value="Menor">Menor</option>
+            <option value="Vitalicio">Vitalicio</option>
+        </select>
+
+        <button type="submit" class="btn btn-save"><i class="fas fa-save"></i> Guardar</button>
+        <a th:href="@{/socios}" class="btn btn-cancel"><i class="fas fa-times"></i> Cancelar</a>
+    </form>
+</div>
+
 </body>
 </html>

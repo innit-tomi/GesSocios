@@ -7,9 +7,26 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SocioRep extends JpaRepository<Socio, Long> {
+
+    // Buscar por parte del apellido (ignora mayúsculas/minúsculas)
     @Query("SELECT s FROM Socio s WHERE LOWER(s.apellido) LIKE LOWER(CONCAT('%', :apellido, '%'))")
     List<Socio> findByApellidoContainingIgnoreCase(@Param("apellido") String apellido);
+
+    // Buscar por número de socio (único) - Devuelve Optional por seguridad
+    Optional<Socio> findByNumeroSocio(Integer numeroSocio);
+
+    // Buscar por nombre (parcial, ignora mayúsculas/minúsculas)
+    Socio findByNombreContainingIgnoreCase(String nombre);
+
+    // Contar los socios asociados a una actividad específica
+    @Query("SELECT COUNT(s) FROM Socio s JOIN s.actividades a WHERE a.id = :actividadId")
+    long countByActividadId(Long actividadId);
+
+    Optional<Socio> findByDocumento(String documento);
+
+
 }

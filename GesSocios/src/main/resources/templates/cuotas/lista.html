@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Cuotas</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        /* Menú fijo a la izquierda */
+        .menu {
+            width: 180px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-right: 1px solid #ddd;
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        /* Contenido */
+        .content {
+            margin-left: 200px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Contenedor principal con menú y contenido -->
+<div class="container">
+
+    <!-- Menú a la izquierda -->
+    <div class="menu" th:replace="~{fragments/menu :: menu}"></div>
+
+    <!-- Contenido a la derecha -->
+    <div class="content">
+        <h1>Lista de Cuotas</h1>
+
+        <!-- Botón Cobrar Cuota -->
+        <a th:href="@{/cuotas/buscar}"
+           style="padding: 8px 12px; background-color: #f0ad4e; color: white; text-decoration: none; border-radius: 4px; margin-top: 10px; display: inline-block;">
+            Cobrar Cuota
+        </a>
+
+        <table border="1" style="margin-top: 20px;">
+            <thead>
+            <tr>
+                <th>N° Socio</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Método de Pago</th>
+                <th>Monto Total</th>
+                <th>Fecha Pago</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cuota : ${cuotas}">
+                <td th:text="${cuota.socio != null ? cuota.socio.numeroSocio : 'Sin socio'}"></td>
+                <td th:text="${cuota.socio != null ? cuota.socio.nombre : 'Desconocido'}"></td>
+                <td th:text="${cuota.socio != null ? cuota.socio.apellido : 'Desconocido'}"></td>
+                <td th:text="${cuota.metodoPago}"></td>
+                <td th:text="${cuota.montoTotal}"></td>
+                <td th:text="${cuota.fechaPago != null ? cuota.fechaPago.format(T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy')) : ''}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Pagar Cuota</title></head>
+<body>
+<h2>Datos del Socio</h2>
+<p>Nombre: <span th:text="${socio.nombre}"></span></p>
+<p>Apellido: <span th:text="${socio.apellido}"></span></p>
+<p>N° de Socio: <span th:text="${socio.numeroSocio}"></span></p>
+<p>Tipo de Socio: <span th:text="${socio.tipo}"></span></p>
+
+<h3>Actividades Inscripto:</h3>
+<ul>
+  <li th:each="actividad : ${socio.actividades}" th:text="${actividad.nombre} + ' - $' + ${actividad.precioSocio}"></li>
+</ul>
+
+<p><strong>Total a pagar:</strong> $<span th:text="${montoTotal}"></span></p>
+
+<form th:action="@{'/cuotas/pagar/' + ${socio.id}}" method="post">
+  <label for="metodoPago">Método de Pago:</label>
+  <select id="metodoPago" name="metodoPago">
+    <option value="Efectivo">Efectivo</option>
+    <option value="Tarjeta">Tarjeta</option>
+    <option value="Transferencia">Transferencia</option>
+    <!-- Puedes agregar más métodos de pago según tu preferencia -->
+  </select>
+
+  <button type="submit">Realizar Pago</button>
+</form>
+
+<a th:href="@{/cuotas/lista}">Volver</a>
+</body>
+</html>

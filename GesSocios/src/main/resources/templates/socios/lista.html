@@ -1,42 +1,174 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Lista de Socios</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Elimina el display flex para que no deje tanto espacio */
+        .container {
+            margin: 20px;
+        }
+
+        /* Estado colores */
+        .estado-activo {
+            background-color: #d4edda; /* verde pastel */
+        }
+        .estado-moroso {
+            background-color: #fff3cd; /* amarillo suave */
+        }
+        .estado-inactivo {
+            background-color: #e2e3e5; /* gris claro */
+        }
+
+        /* Menú fijo a la izquierda */
+        .menu {
+            width: 180px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-right: 1px solid #ddd;
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        /* Contenido */
+        .content {
+            margin-left: 200px;
+            padding: 10px;
+        }
+
+        /* Botones de acción */
+        .action-button {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px;
+            padding: 8px 15px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            background-color: #28a745; /* Fondo verde */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .action-button i {
+            margin-right: 8px;
+        }
+
+        .action-button:hover {
+            background-color: #218838; /* Verde más oscuro al pasar el cursor */
+            transform: scale(1.05); /* Le da un pequeño efecto de agrandado al hacer hover */
+        }
+
+        .action-button:active {
+            background-color: #1e7e34; /* Efecto al hacer clic */
+        }
+
+        .action-button-delete {
+            background-color: #dc3545; /* Fondo rojo para eliminar */
+        }
+
+        .action-button-delete:hover {
+            background-color: #c82333; /* Rojo más oscuro al pasar el cursor */
+        }
+
+        .action-button-delete:active {
+            background-color: #bd2130; /* Efecto al hacer clic */
+        }
+
+        /* Botones adicionales */
+        .btn {
+            padding: 8px 12px;
+            background-color: #f0ad4e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #ec971f;
+        }
+    </style>
 </head>
 <body>
-<h1>Lista de Socios</h1>
-<form th:action="@{/socios/buscar}" method="get">
-    <input type="text" name="apellido" th:value="${apellido}" placeholder="Buscar por apellido"/>
-    <button type="submit">Buscar</button>
-</form>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Documento</th>
-        <th>Número de Socio</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="socio : ${socios}">
-        <td th:text="${socio.id}"></td>
-        <td th:text="${socio.nombre}"></td>
-        <td th:text="${socio.apellido}"></td>
-        <td th:text="${socio.documento}"></td>
-        <td th:text="${socio.numeroDeSocio}"></td>
-        <td>
-            <a th:href="@{'/socios/editar/' + ${socio.id}}">Editar</a>
-            <a th:href="@{'/socios/eliminar/' + ${socio.id}}">Eliminar</a>
-            <form th:action="@{'/socios/' + ${socio.id} + '/pagar'}" method="post" style="display:inline;">
-                <input type="submit" value="Pagar"/>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a th:href="@{/socios/nuevo}">Agregar Nuevo Socio</a>
+<!-- Contenedor principal con menú y contenido -->
+<div class="container">
+    <!-- Menú a la izquierda -->
+    <div class="menu" th:replace="~{fragments/menu :: menu}"></div>
+
+    <!-- Contenido a la derecha -->
+    <div class="content">
+        <h1>Lista de Socios</h1>
+
+        <!-- Formulario de búsqueda -->
+        <form th:action="@{/socios/buscar}" method="get">
+            <input type="text" name="apellido" th:value="${apellido}" placeholder="Buscar por apellido"/>
+            <button type="submit">Buscar</button>
+        </form>
+
+        <!-- Botón para Verificar Estados -->
+        <form th:action="@{/socios/verificar-estados}" method="post" style="margin-top: 10px;">
+            <button type="submit" class="btn">
+                Actualizar Estados
+            </button>
+        </form>
+        <a th:href="@{/socios/nuevo}" style="display: inline-block; margin-top: 20px;">
+            <i class="fas fa-plus-circle"></i> Agregar Nuevo Socio
+        </a>
+
+        <table border="1" style="margin-top: 20px;">
+            <thead>
+            <tr>
+                <th>Número de Socio</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Documento</th>
+                <th>Genero</th>
+                <th>Domicilio</th>
+                <th>Contacto</th>
+                <th>Categoria</th>
+                <th>Actividades</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="socio : ${socios}"
+                th:classappend="
+                    ${#strings.equalsIgnoreCase(socio.estado, 'ACTIVO')} ? 'estado-activo' :
+                    (${#strings.equalsIgnoreCase(socio.estado, 'MOROSO')} ? 'estado-moroso' : 'estado-inactivo')">
+                <td th:text="${socio.numeroSocio}"></td>
+                <td th:text="${socio.nombre}"></td>
+                <td th:text="${socio.apellido}"></td>
+                <td th:text="${socio.documento}"></td>
+                <td th:text="${socio.genero}"></td>
+                <td th:text="${socio.domicilio}"></td>
+                <td th:text="${socio.mail}"></td>
+                <td th:text="${socio.tipo}"></td>
+                <td th:text="${socio.cantActividades}"></td>
+                <td th:text="${socio.estado}"></td>
+                <td>
+                    <a th:href="@{'/socios/editar/' + ${socio.id}}" class="action-button"><i class="fas fa-pencil-alt"></i> Editar</a>
+                    <a th:href="@{'/socios/detalles/' + ${socio.id}}" class="action-button"><i class="fas fa-eye"></i> Detalles</a>
+                    <a th:href="@{'/socios/eliminar/' + ${socio.id}}"
+                       onclick="return confirm('¿Seguro que deseas eliminar este socio?');" class="action-button action-button-delete"><i class="fas fa-trash-alt"></i> Eliminar</a>
+
+                    <!-- Botón Dar de Baja -->
+                    <form th:action="@{'/socios/darDeBaja/' + ${socio.id}}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('¿Seguro que deseas dar de baja este socio?');" class="btn">
+                            <i class="fas fa-user-slash"></i> Dar de Baja
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
 </body>
 </html>
