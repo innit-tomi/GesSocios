@@ -4,55 +4,76 @@
     <meta charset="UTF-8">
     <title>Inicio - GesSocios</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        .container {
-            display: flex;
-            justify-content: space-between;
-            margin: 20px;
-        }
-
+        /* Menu fijo a la izquierda */
         .menu {
-            width: 5%;
+            width: 180px;
             padding: 20px;
             background-color: #f8f9fa;
             border-right: 1px solid #ddd;
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
         }
 
-        .content {
-            width: 85%;
-            padding: 20px;
+        /* Contenido */
+        .container {
+            margin-left: 200px; /* Espacio para el menú */
+            padding: 0px;
         }
 
         .boton {
             display: inline-block;
             padding: 10px 15px;
-            background-color: #4CAF50;
+            background-color: #28a745; /* Verde */
             color: white;
             text-decoration: none;
             border-radius: 4px;
             margin: 10px 0;
+            font-size: 16px;
         }
 
         .boton:hover {
-            background-color: #45a049;
+            background-color: #218838;
+        }
+
+        .info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+
+        ul {
+            margin-top: 10px;
+            margin-left: 20px;
         }
     </style>
 </head>
 <body>
 
-<!-- Contenedor principal con menú y contenido -->
+<!-- Menú fijo -->
+<div class="menu" th:replace="~{fragments/menu :: menu}"></div>
+
+<!-- Contenido principal -->
 <div class="container">
+    <h1><i class="fas fa-home"></i> Bienvenido a GesSocios</h1>
 
-    <!-- Menú a la izquierda -->
-    <div class="menu" th:replace="~{fragments/menu :: menu}"></div>
-
-    <!-- Contenido a la derecha -->
-    <div class="content">
-        <h1>Bienvenido a GesSocios</h1>
-        <p>Sistema de gestión de socios y actividades del Club Junín.</p>
-        <p>Use el menú de la izquierda para navegar por las secciones.</p>
+    <div class="info">
+        <p><strong>GesSocios</strong> es el sistema oficial de gestión administrativa del <em>Club Junín</em>.</p>
+        <p>Desde aquí podrá realizar las siguientes tareas:</p>
+        <ul>
+            <li><strong>Gestionar socios</strong>: Altas, bajas, modificaciones y control de estado (activo, moroso o inactivo).</li>
+            <li><strong>Administrar actividades</strong>: Crear y gestionar actividades deportivas o recreativas, inscribiendo socios y no socios.</li>
+            <li><strong>Registrar pagos</strong>: Controlar las cuotas sociales, registrar cobros y actualizar automáticamente el estado de cada socio.</li>
+            <li><strong>Consultar contabilidad</strong>: Acceder al resumen de cuotas y estados financieros del club.</li>
+        </ul>
+        <p>Utilice el <strong>menú de la izquierda</strong> para navegar por las diferentes secciones del sistema.</p>
     </div>
-
 </div>
 
 </body>

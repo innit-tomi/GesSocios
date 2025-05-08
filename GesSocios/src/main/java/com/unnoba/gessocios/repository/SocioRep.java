@@ -29,4 +29,30 @@ public interface SocioRep extends JpaRepository<Socio, Long> {
     Optional<Socio> findByDocumento(String documento);
 
 
+    // Totales
+    @Query("SELECT COUNT(s) FROM Socio s")
+    long contarTotalSocios();
+
+    // Por género
+    @Query("SELECT COUNT(s) FROM Socio s WHERE s.genero = 'FEMENINO'")
+    long contarFemeninos();
+
+    @Query("SELECT COUNT(s) FROM Socio s WHERE s.genero = 'MASCULINO'")
+    long contarMasculinos();
+
+    @Query("SELECT COUNT(s) FROM Socio s WHERE s.genero = 'OTRO'")
+    long contarOtroGenero();
+
+    // Por estado
+    @Query("SELECT COUNT(s) FROM Socio s WHERE s.estado = 'ACTIVO'")
+    long contarActivos();
+
+    @Query("SELECT COUNT(s) FROM Socio s WHERE s.estado = 'INACTIVO'")
+    long contarInactivos();
+
+    // Morosos (los que no pagaron este mes)
+    @Query("SELECT COUNT(s) FROM Socio s WHERE s.estado = 'MOROSO'")
+    long contarMorosos();
+
+
 }

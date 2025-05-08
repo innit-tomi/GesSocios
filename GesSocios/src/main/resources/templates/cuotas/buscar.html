@@ -2,15 +2,113 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Buscar Socio</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .socio-info {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .socio-info p {
+            margin: 5px 0;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+    </style>
 </head>
 <body>
-<h2>Buscar Socio</h2>
-<form th:action="@{/cuotas/buscar}" method="post">
-    <input type="text" name="termino" placeholder="Nombre o N° de Socio"/>
-    <button type="submit">Buscar</button>
-</form>
 
-<div th:if="${mensaje != null}" th:text="${mensaje}" style="color: red;"></div>
-<a th:href="@{/cuotas/lista}">Volver</a>
+<div class="container">
+    <h2><i class="fas fa-search"></i> Buscar Socio</h2>
+
+    <form th:action="@{/cuotas/buscar}" method="post" onsubmit="return validarFormulario()">
+        <input type="text" id="termino" name="termino" placeholder="Nombre o N° de Socio"/>
+        <br>
+        <button type="submit"><i class="fas fa-search"></i> Buscar</button>
+    </form>
+
+    <script>
+        function validarFormulario() {
+            let campo = document.getElementById("termino").value.trim();
+            if (campo === "") {
+                alert("Por favor ingrese un nombre o número de socio.");
+                return false; // No envía el formulario
+            }
+            return true;
+        }
+    </script>
+
+    <div th:if="${mensaje != null}" th:text="${mensaje}" class="error"></div>
+
+    <a th:href="@{/cuotas/lista}"><i class="fas fa-arrow-left"></i> Volver</a>
+</div>
+
+
+
 </body>
 </html>

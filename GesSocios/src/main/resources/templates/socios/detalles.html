@@ -162,9 +162,19 @@
     $('.select-actividad').select2({
       placeholder: "Buscar actividad...",
       allowClear: true,
-      width: '30%'  // Hace que se ajuste al ancho del contenedor
+      width: '30%'
+    });
+
+    // Validar antes de enviar
+    $('form').on('submit', function(e) {
+      let actividadId = $('.select-actividad').val();
+      if (!actividadId) {
+        e.preventDefault();
+        alert('Por favor, seleccione una actividad antes de agregar.');
+      }
     });
   });
 </script>
+
 
 </html>

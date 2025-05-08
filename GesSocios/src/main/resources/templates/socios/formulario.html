@@ -91,6 +91,7 @@
 
 <div class="container">
     <h1 th:text="${socio.id != null} ? 'Editar Socio' : 'Nuevo Socio'">Formulario de Socio</h1>
+    <p th:if="${mensajeError}" th:text="${mensajeError}" style="color: red;"></p>
 
     <form th:action="${socio.id != null} ? @{/socios/{id}(id=${socio.id})} : @{/socios}" th:object="${socio}" method="post">
         <input type="hidden" th:if="${socio.id != null}" th:field="*{id}" />

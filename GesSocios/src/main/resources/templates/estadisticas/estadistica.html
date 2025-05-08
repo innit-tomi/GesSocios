@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Estadísticas</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+
+        .charts-wrapper {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap; /* Por si en pantallas chicas querés que se acomoden */
+            margin-top: 30px;
+        }
+
+        .chart-container {
+            width: 45%; /* Para que entren dos gráficos lado a lado */
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+<!-- Contenedor principal -->
+<div class="container">
+    <!-- Menú -->
+    <div class="menu" th:replace="~{fragments/menu :: menu}"></div>
+
+    <!-- Contenido -->
+    <div class="content">
+        <h1>Estadísticas del Sistema</h1>
+
+        <!-- Balance de Ingresos -->
+        <h2>Balance General</h2>
+        <p><strong th:text="'Balance total: $' + ${balance}"></strong></p>
+
+        <!-- Estadísticas de Socios -->
+        <h2>Estadísticas de Socios</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Informacion Socios</th>
+                <th>Valor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Total Socios</td>
+                <td th:text="${statsSocios.total}"></td>
+            </tr>
+            <tr>
+                <td>Socios Femeninos</td>
+                <td th:text="${statsSocios.femeninos}"></td>
+            </tr>
+            <tr>
+                <td>Socios Masculinos</td>
+                <td th:text="${statsSocios.masculinos}"></td>
+            </tr>
+            <tr>
+                <td>Socios Otro</td>
+                <td th:text="${statsSocios.otro}"></td>
+            </tr>
+            <tr>
+                <td>Socios Activos</td>
+                <td th:text="${statsSocios.activos}"></td>
+            </tr>
+            <tr>
+                <td>Socios Inactivos</td>
+                <td th:text="${statsSocios.inactivos}"></td>
+            </tr>
+            <tr>
+                <td>Socios Morosos</td>
+                <td th:text="${statsSocios.morosos}"></td>
+            </tr>
+            </tbody>
+
+        </table>
+
+        <!-- Gráficos -->
+        <div class="charts-wrapper">
+            <div class="chart-container">
+                <h2>Distribución de Socios Por Genero</h2>
+                <canvas id="generoChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Estado de Socios</h2>
+                <canvas id="estadoChart"></canvas>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script th:inline="javascript">
+    // Leer datos de Thymeleaf
+    let femeninos = [[${statsSocios['femeninos']}]];
+    let masculinos = [[${statsSocios['masculinos']}]];
+    let otro = [[${statsSocios['otro']}]];
+    let activos = [[${statsSocios['activos']}]];
+    let inactivos = [[${statsSocios['inactivos']}]];
+    let morosos = [[${statsSocios['morosos']}]];
+
+    // Gráfico de Género
+    new Chart(document.getElementById('generoChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Femeninos', 'Masculinos', 'Otro'],
+            datasets: [{
+                data: [femeninos, masculinos, otro],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+            }]
+        }
+    });
+
+    // Gráfico de Estado
+    new Chart(document.getElementById('estadoChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Activos', 'Inactivos', 'Morosos'],
+            datasets: [{
+                label: 'Cantidad',
+                data: [activos, inactivos, morosos],
+                backgroundColor: ['#4BC0C0', '#FF9F40', '#FF6384']
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>

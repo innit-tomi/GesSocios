@@ -76,7 +76,8 @@ public class SocioService {
         socioExistente.setLocalidad(socioActualizado.getLocalidad());
         socioExistente.setDomicilio(socioActualizado.getDomicilio());
         socioExistente.setTipo(socioActualizado.getTipo());
-
+        socioExistente.setMail(socioActualizado.getMail());
+        socioExistente.setGenero(socioActualizado.getGenero());
         // NO TOCAR: número de socio ni estado
         return socioRepository.save(socioExistente);
     }
@@ -257,6 +258,11 @@ public class SocioService {
             socioRepository.save(socio);
         }
     }
+
+    public Optional<Socio> buscarPorDocumento(String documento) {
+        return socioRepository.findByDocumento(documento);  // Asegúrate que findByDocumento devuelva un Optional
+    }
+
 
 
 

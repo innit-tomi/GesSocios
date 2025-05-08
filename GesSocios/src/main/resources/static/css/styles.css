@@ -25,17 +25,18 @@ th {
 
 a, button {
     padding: 8px 12px;
-    background-color: #4CAF50;
+    background-color: #007bff; /* Azul profesional */
     color: white;
     text-decoration: none;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     margin-right: 10px;
+    font-size: 16px;
 }
 
 a:hover, button:hover {
-    background-color: #45a049;
+    background-color: #0056b3; /* Azul más oscuro en hover */
 }
 
 input[type="text"], input[type="number"], select {
@@ -52,15 +53,14 @@ form div {
     margin-top: 20px;
 }
 
-
 /* Menú fijo a la izquierda */
 nav {
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
-    width: 180px; /* ancho más chico */
-    background-color: #333;
+    width: 180px;
+    background-color: #e9ecef;
     padding-top: 20px;
 }
 
@@ -73,31 +73,34 @@ nav ul {
 /* Enlaces del menú */
 nav ul li a {
     display: block;
-    color: white;
-    padding: 12px 16px;
+    color: #333; /* Texto oscuro, legible */
+    padding: 12px 16px; /* Ahora con buen padding */
     text-decoration: none;
-    font-size: 18px; /* palabras más grandes */
+    font-size: 18px;
+    border-radius: 4px; /* Bordes suaves */
 }
 
-/* Efecto hover */
+/* Efecto hover en el menú */
 nav ul li a:hover {
-    background-color: #555;
+    background-color: #007bff; /* Azul profesional */
+    color: white;
 }
 
-/* Enlace activo (seleccionado) */
+/* Enlace activo */
 nav ul li a.active {
-    background-color: #4CAF50;
+    background-color: #0056b3; /* Azul más oscuro */
+    color: white;
 }
 
-/* Para que el contenido no quede tapado por el menú */
+/* Contenido que deja espacio al menú */
 .main-content {
-    margin-left: 200px; /* un poco más que el width del nav */
+    margin-left: 200px;
     padding: 20px;
 }
 
-/* Menú fijo a la izquierda */
+/* Menú general */
 .menu {
-    width: 180px; /* Ancho fijo para todas las vistas */
+    width: 180px;
     padding: 20px;
     background-color: #f8f9fa;
     border-right: 1px solid #ddd;
@@ -107,9 +110,8 @@ nav ul li a.active {
     left: 0;
 }
 
-/* Contenido que deja espacio al menú */
+/* Contenido */
 .content {
-    margin-left: 200px; /* 180px (menu) + 20px (un poquito de aire) */
+    margin-left: 200px;
     padding: 10px;
 }
-

@@ -52,7 +52,7 @@ public class CuotaController {
             // Redirigir a una página de error o mostrar un mensaje en la misma página
             return "redirect:/cuotas/buscar?error=" + e.getMessage();
         }
-        return "redirect:/cuotas/buscar?success";
+        return "redirect:/cuotas/lista";
     }
 
 

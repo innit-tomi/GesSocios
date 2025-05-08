@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Contabilidad</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .entrada {
             background-color: #d4edda; /* verde pastel */
@@ -12,10 +14,45 @@
             background-color: #f8d7da; /* rojo claro */
         }
 
+        /* Menú fijo a la izquierda */
+        .menu {
+            width: 180px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-right: 1px solid #ddd;
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        /* Contenido */
+        .content {
+            margin-left: 200px;
+            padding: 10px;
+        }
+
+        /* Botones adicionales */
+        .btn {
+            padding: 8px 12px;
+            background-color: #f0ad4e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #ec971f;
+        }
+
+        /* Espacio entre botones del menú */
+        nav a {
+            margin-bottom: 10px; /* Espacio entre cada botón */
+            display: inline-block;
+        }
 
     </style>
-
-
 </head>
 <body>
 <!-- Contenedor principal -->
@@ -28,12 +65,12 @@
         <h1>Movimientos Contables</h1>
 
         <!-- Botón para agregar movimiento -->
-        <a th:href="@{/contabilidad/nuevo}" style="display: inline-block; margin-top: 10px;">
-            Registrar Movimiento
+        <a th:href="@{/contabilidad/nuevo}" class="btn" style="margin-top: 10px; display: inline-block;">
+            <i class="fas fa-plus-circle"></i> Registrar Movimiento
         </a>
 
         <!-- Tabla -->
-        <table>
+        <table style="margin-top: 20px;" border="1">
             <thead>
             <tr>
                 <th>Fecha</th>
@@ -48,7 +85,7 @@
                 th:classappend="${mov.tipo == T(com.unnoba.gessocios.model.TipoMovimiento).ENTRADA} ? 'entrada' : 'salida'">
                 <td th:text="${mov.fecha}"></td>
                 <td th:text="${mov.motivo}"></td>
-                <td th:text="${mov.monto}"></td>
+                <td th:text="'$' + ${mov.monto}"></td> <!-- Aquí se agrega el símbolo de dólar -->
                 <td th:text="${mov.tipo}"></td>
                 <td th:text="${mov.socio != null ? mov.socio.numeroSocio : '-'}"></td>
             </tr>

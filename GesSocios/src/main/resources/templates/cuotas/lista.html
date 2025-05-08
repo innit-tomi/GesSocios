@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Cuotas</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        .container {
+            margin: 20px;
+        }
+
         /* Menú fijo a la izquierda */
         .menu {
             width: 180px;
@@ -21,6 +27,55 @@
         .content {
             margin-left: 200px;
             padding: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Botones de acción */
+        .action-button {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px;
+            padding: 8px 15px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .action-button i {
+            margin-right: 8px;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Tabla profesional */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        nav a {
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -37,20 +92,19 @@
         <h1>Lista de Cuotas</h1>
 
         <!-- Botón Cobrar Cuota -->
-        <a th:href="@{/cuotas/buscar}"
-           style="padding: 8px 12px; background-color: #f0ad4e; color: white; text-decoration: none; border-radius: 4px; margin-top: 10px; display: inline-block;">
-            Cobrar Cuota
+        <a th:href="@{/cuotas/buscar}" class="action-button">
+            <i class="fas fa-hand-holding-usd"></i> Cobrar Cuota
         </a>
 
-        <table border="1" style="margin-top: 20px;">
+        <table>
             <thead>
             <tr>
-                <th>N° Socio</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Método de Pago</th>
-                <th>Monto Total</th>
-                <th>Fecha Pago</th>
+                <th><i class="fas fa-id-card"></i> N° Socio</th>
+                <th><i class="fas fa-user"></i> Nombre</th>
+                <th><i class="fas fa-user"></i> Apellido</th>
+                <th><i class="fas fa-credit-card"></i> Método de Pago</th>
+                <th><i class="fas fa-dollar-sign"></i> Monto Total</th>
+                <th><i class="fas fa-calendar-alt"></i> Fecha Pago</th>
             </tr>
             </thead>
             <tbody>
@@ -59,7 +113,7 @@
                 <td th:text="${cuota.socio != null ? cuota.socio.nombre : 'Desconocido'}"></td>
                 <td th:text="${cuota.socio != null ? cuota.socio.apellido : 'Desconocido'}"></td>
                 <td th:text="${cuota.metodoPago}"></td>
-                <td th:text="${cuota.montoTotal}"></td>
+                <td th:text="'$' + ${cuota.montoTotal}"></td>
                 <td th:text="${cuota.fechaPago != null ? cuota.fechaPago.format(T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy')) : ''}"></td>
             </tr>
             </tbody>

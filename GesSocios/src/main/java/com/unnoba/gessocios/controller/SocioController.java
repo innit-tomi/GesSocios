@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/socios")
@@ -43,10 +44,22 @@ public class SocioController {
     }
 
     @PostMapping
-    public String guardar(@ModelAttribute Socio socio) {
+    public String guardar(@ModelAttribute Socio socio, RedirectAttributes redirectAttributes) {
+        // Primero buscamos si ya existe un socio con el documento
+        Optional<Socio> existente = socioService.buscarPorDocumento(socio.getDocumento());
+
+        if (existente.isPresent()) {
+            // Si existe, mostramos un mensaje de error
+            redirectAttributes.addFlashAttribute("mensajeError", "Ya existe un socio con ese documento.");
+            return "redirect:/socios/nuevo";
+        }
+
+        // Si no existe, lo creamos
         socioService.crearSocio(socio);
         return "redirect:/socios";
     }
+
+
 
     @GetMapping("/editar/{id}")
     public String formularioEditar(@PathVariable Long id, Model model) {
@@ -88,12 +101,12 @@ public class SocioController {
     public String darDeBaja(@PathVariable Long id) {
         Socio socio = socioService.buscarPorId(id);
         if (socio != null) {
+            socio.getActividades().clear();
             socio.setEstado(EstadoSocio.INACTIVO);
             socioService.guardar(socio);
         }
         return "redirect:/socios";
     }
-
 
 
     @Autowired

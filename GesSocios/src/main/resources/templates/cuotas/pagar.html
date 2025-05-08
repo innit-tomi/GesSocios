@@ -1,32 +1,124 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Pagar Cuota</title></head>
+<head>
+  <title>Pagar Cuota</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      margin-top: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 450px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin: 5px 0;
+      text-align: left;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      text-align: left;
+    }
+
+    li {
+      margin: 5px 0;
+    }
+
+    select, button {
+      padding: 10px;
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .total {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+  </style>
+</head>
 <body>
-<h2>Datos del Socio</h2>
-<p>Nombre: <span th:text="${socio.nombre}"></span></p>
-<p>Apellido: <span th:text="${socio.apellido}"></span></p>
-<p>N° de Socio: <span th:text="${socio.numeroSocio}"></span></p>
-<p>Tipo de Socio: <span th:text="${socio.tipo}"></span></p>
 
-<h3>Actividades Inscripto:</h3>
-<ul>
-  <li th:each="actividad : ${socio.actividades}" th:text="${actividad.nombre} + ' - $' + ${actividad.precioSocio}"></li>
-</ul>
+<div class="container">
 
-<p><strong>Total a pagar:</strong> $<span th:text="${montoTotal}"></span></p>
+  <h2><i class="fas fa-money-bill-wave"></i> Pagar Cuota</h2>
 
-<form th:action="@{'/cuotas/pagar/' + ${socio.id}}" method="post">
-  <label for="metodoPago">Método de Pago:</label>
-  <select id="metodoPago" name="metodoPago">
-    <option value="Efectivo">Efectivo</option>
-    <option value="Tarjeta">Tarjeta</option>
-    <option value="Transferencia">Transferencia</option>
-    <!-- Puedes agregar más métodos de pago según tu preferencia -->
-  </select>
+  <h3><i class="fas fa-id-card"></i> Datos del Socio</h3>
+  <p><strong>Nombre:</strong> <span th:text="${socio.nombre}"></span></p>
+  <p><strong>Apellido:</strong> <span th:text="${socio.apellido}"></span></p>
+  <p><strong>N° de Socio:</strong> <span th:text="${socio.numeroSocio}"></span></p>
+  <p><strong>Tipo de Socio:</strong> <span th:text="${socio.tipo}"></span></p>
 
-  <button type="submit">Realizar Pago</button>
-</form>
+  <h3><i class="fas fa-dumbbell"></i> Actividades Inscripto:</h3>
+  <ul>
+    <li th:each="actividad : ${socio.actividades}" th:text="${actividad.nombre} + ' - $' + ${actividad.precioSocio}"></li>
+  </ul>
 
-<a th:href="@{/cuotas/lista}">Volver</a>
+  <p class="total"><i class="fas fa-wallet"></i> Total a pagar: $<span th:text="${montoTotal}"></span></p>
+
+  <form th:action="@{'/cuotas/pagar/' + ${socio.id}}" method="post">
+    <label for="metodoPago"><strong>Método de Pago:</strong></label>
+    <select id="metodoPago" name="metodoPago">
+      <option value="Efectivo">Efectivo</option>
+      <option value="Tarjeta">Tarjeta</option>
+      <option value="Transferencia">Transferencia</option>
+    </select>
+
+    <button type="submit"><i class="fas fa-check"></i> Realizar Pago</button>
+  </form>
+
+  <a th:href="@{/cuotas/lista}"><i class="fas fa-arrow-left"></i> Volver</a>
+
+</div>
+
 </body>
 </html>

@@ -14,13 +14,13 @@
 
         /* Estado colores */
         .estado-activo {
-            background-color: #d4edda; /* verde pastel */
+            background-color: #3DF966; /* verde pastel */
         }
         .estado-moroso {
-            background-color: #fff3cd; /* amarillo suave */
+            background-color: #DAF337 ; /* amarillo suave */
         }
         .estado-inactivo {
-            background-color: #e2e3e5; /* gris claro */
+            background-color: #E0E5D2; /* gris claro */
         }
 
         /* Menú fijo a la izquierda */
@@ -92,6 +92,10 @@
         .btn:hover {
             background-color: #ec971f;
         }
+
+        nav a {
+            margin-bottom: 10px; /* Espacio entre cada botón */
+        }
     </style>
 </head>
 <body>
@@ -154,9 +158,6 @@
                 <td>
                     <a th:href="@{'/socios/editar/' + ${socio.id}}" class="action-button"><i class="fas fa-pencil-alt"></i> Editar</a>
                     <a th:href="@{'/socios/detalles/' + ${socio.id}}" class="action-button"><i class="fas fa-eye"></i> Detalles</a>
-                    <a th:href="@{'/socios/eliminar/' + ${socio.id}}"
-                       onclick="return confirm('¿Seguro que deseas eliminar este socio?');" class="action-button action-button-delete"><i class="fas fa-trash-alt"></i> Eliminar</a>
-
                     <!-- Botón Dar de Baja -->
                     <form th:action="@{'/socios/darDeBaja/' + ${socio.id}}" method="post" style="display:inline;">
                         <button type="submit" onclick="return confirm('¿Seguro que deseas dar de baja este socio?');" class="btn">
